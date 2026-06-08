@@ -1,20 +1,28 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Together - Inicio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 font-sans">
+<!avisa al navegador que este archivo es un documento HTML5>
+<html lang="es"> <!Abre el código de la página y te avisa del idioma de la pagina>
+  <!--------------------------------------->  
+<head> <!abre confi oculta, nada de aqui se ve en la pagina>
 
+    <meta charset="UTF-8"> <!la configuración del idioma de los caracteres,puedes poner tildes, la letra "ñ" o emojis>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <! hace que se adapte sola y se vea bien tanto en una pantalla gigante de ordenador, la web>
+    
+    <title>Explore Together - Inicio</title> <!Nombre de la pagina en la q estas>
+    <script src="https://cdn.tailwindcss.com"></script> <!conecta con Tailwind CSS. Es como mandar a llamar una librería gigante llena de estilos>
+</head> <!Cierra la sección>
+  <!--------------------------------------->  
+    <!todo dentro del body el usuario sí puede ver y tocar.>
+<body class="bg-gray-50 font-sans">
+<!lo q sea q sigua class=" es un estilo tailwind>
     <header class="bg-gray-900 text-white p-4">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <div class="font-bold tracking-wider text-sm">✈️ EXPLORE TOGETHER</div>
+            <div class="font-bold tracking-wider text-sm">✈️ EXPLORE TOGETHER</div> <!Es el logotipo de tu marca.>
             
             <nav class="space-x-6 text-sm font-medium">
+             <! -----esto relaciona la pestaña de index y la de organize para q puedas ir y volver clickando----->
                 <a href="index.html" class="text-blue-400 border-b-2 border-blue-400 pb-1">Inicio</a>
                 <a href="Organize.html" class="text-gray-300 hover:text-white transition">Organizar Viaje</a>
+            <!-------------------------------------->
             </nav>
         </div>
     </header>
