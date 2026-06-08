@@ -6,7 +6,6 @@
     <title>Planifica tu Ruta - Explore Together</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Oculta la flecha fea por defecto que traen los desplegables del navegador */
         details > summary::-webkit-details-marker { display: none; }
         details > summary { list-style: none; }
     </style>
@@ -29,27 +28,32 @@
 
         <form class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
             
-            <div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:pr-4">
+            <div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:pr-4 relative">
                 <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
                     📍 ¿Desde dónde sales?
                 </label>
                 <input 
+                    id="origin-input"
                     type="text" 
-                    value="Madrid, España" 
+                    autocomplete="off"
                     class="w-full bg-transparent text-sm font-semibold text-gray-800 focus:outline-none placeholder-gray-300"
                     placeholder="Ciudad de origen"
                 >
+                <div id="origin-suggestions" class="absolute left-0 right-0 mt-3 bg-white border border-gray-100 rounded-xl shadow-xl z-50 max-h-48 overflow-y-auto hidden"></div>
             </div>
 
-            <div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:px-4">
+            <div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:px-4 relative">
                 <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
                     🎯 ¿A dónde quieres ir?
                 </label>
                 <input 
+                    id="destination-input"
                     type="text" 
-                    placeholder="Ej: Helsinki, Finlandia" 
+                    autocomplete="off"
                     class="w-full bg-transparent text-sm font-semibold text-gray-800 focus:outline-none placeholder-gray-300"
+                    placeholder="Ciudad de destino"
                 >
+                <div id="destination-suggestions" class="absolute left-0 right-0 mt-3 bg-white border border-gray-100 rounded-xl shadow-xl z-50 max-h-48 overflow-y-auto hidden"></div>
             </div>
 
             <div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:px-4 relative">
@@ -81,7 +85,11 @@
                             <span>🚌 Autobús</span>
                         </label>
 
-                   </div>
+                        <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700 hover:text-blue-600">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                            <span>🚗 Coche</span>
+                        </label>
+                    </div>
                 </details>
             </div>
 
@@ -101,6 +109,75 @@
     <footer class="text-center p-4 text-xs text-gray-400 bg-white border-t border-gray-100">
         &copy; 2026 Explore Together. Diseñado para GitHub Pages.
     </footer>
+
+    <script>
+        // 1. Base de datos simulada de ciudades disponibles
+        const cities = [
+            "Bilbao, España",
+            "Barcelona, España",
+            "Berlin, Alemania",
+            "Helsinki, Finlandia",
+            "Londres, Reino Unido",
+            "Madrid, España",
+            "París, Francia",
+            "Porvoo, Finlandia",
+            "Roma, Italia"
+        ];
+
+        // 2. Función reutilizable para activar el autocompletado
+        function enableAutocomplete(inputId, suggestionsId) {
+            const input = document.getElementById(inputId);
+            const box = document.getElementById(suggestionsId);
+
+            // Escucha cuando el usuario escribe en el input
+            input.addEventListener('input', function() {
+                const text = input.value.toLowerCase().trim();
+                box.innerHTML = ''; // Limpia sugerencias anteriores
+
+                // Si está vacío, oculta la cajita y frena la ejecución
+                if (!text) {
+                    box.classList.add('hidden');
+                    return;
+                }
+
+                // Filtra las ciudades que contengan lo escrito
+                const matches = cities.filter(city => city.toLowerCase().includes(text));
+
+                // Si no hay coincidencias, oculta la cajita
+                if (matches.length === 0) {
+                    box.classList.add('hidden');
+                    return;
+                }
+
+                // Muestra la cajita y crea un div por cada ciudad encontrada
+                box.classList.remove('hidden');
+                matches.forEach(city => {
+                    const option = document.createElement('div');
+                    option.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm text-gray-700 transition border-b border-gray-50 last:border-none';
+                    option.textContent = city;
+
+                    // Si el usuario hace clic en la sugerencia
+                    option.addEventListener('click', function() {
+                        input.value = city; // Rellena el input con el texto de la ciudad
+                        box.classList.add('hidden'); // Oculta la lista
+                    });
+
+                    box.appendChild(option);
+                });
+            });
+
+            // Oculta la lista si el usuario hace clic en cualquier otro lado de la pantalla
+            document.addEventListener('click', function(e) {
+                if (!input.contains(e.target) && !box.contains(e.target)) {
+                    box.classList.add('hidden');
+                }
+            });
+        }
+
+        // 3. Activamos el truco para ambos cuadros de búsqueda
+        enableAutocomplete('origin-input', 'origin-suggestions');
+        enableAutocomplete('destination-input', 'destination-suggestions');
+    </script>
 
 </body>
 </html>
