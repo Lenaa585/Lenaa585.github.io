@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planifica tu Ruta - Explore Together</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex flex-col justify-between">
+
+    <header class="bg-gray-950 text-white p-4 shadow-md">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <span class="font-bold tracking-wider text-sm">✈️ EXPLORE TOGETHER</span>
+            <span class="text-xs text-gray-400">Configurador de ruta</span>
+        </div>
+    </header>
+
+    <main class="max-w-xl w-full mx-auto p-6 my-auto">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Planifica tu próximo viaje</h2>
+            <p class="text-sm text-gray-500 mb-6">Introduce tus preferencias para empezar a buscar las mejores combinaciones.</p>
+
+            <form class="space-y-5">
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+                        📍 ¿Desde dónde sales?
+                    </label>
+                    <input 
+                        type="text" 
+                        placeholder="Ej: Madrid, España" 
+                        class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"
+                    >
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+                        🎯 ¿A dónde quieres ir?
+                    </label>
+                    <input 
+                        type="text" 
+                        placeholder="Ej: Helsinki, Finlandia" 
+                        class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"
+                    >
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">
+                        🚊 Transportes que estás dispuesto a usar
+                    </label>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center space-x-3 p-3 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100 transition">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked>
+                            <span class="text-sm font-medium text-gray-700">✈️ Avión</span>
+                        </label>
+
+                        <label class="flex items-center space-x-3 p-3 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100 transition">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked>
+                            <span class="text-sm font-medium text-gray-700">🚊 Tren</span>
+                        </label>
+
+                        <label class="flex items-center space-x-3 p-3 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100 transition">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <span class="text-sm font-medium text-gray-700">🚌 Autobús</span>
+                        </label>
+
+                        <label class="flex items-center space-x-3 p-3 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100 transition">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <span class="text-sm font-medium text-gray-700">🚗 Coche</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button 
+                    type="button" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium p-3 rounded-xl text-sm transition mt-2 shadow-md shadow-blue-100"
+                >
+                    Buscar opciones de ruta
+                </button>
+
+            </form>
+        </div>
+    </main>
+
+    <footer class="text-center p-4 text-xs text-gray-400 bg-white border-t border-gray-100">
+        &copy; 2026 Explore Together. Diseñado para GitHub Pages.
+    </footer>
+
+</body>
+</html>
