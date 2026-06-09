@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planifica tu Ruta - Explore Together</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
+        /* ESTILOS PERSONALIZADOS: Ocultan la flecha por defecto de la etiqueta <details> */
         details > summary::-webkit-details-marker { display: none; }
         details > summary { list-style: none; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col justify-between">
 
-    <header class="bg-gray-950 text-white p-4 shadow-md">
+    <header class="bg-gray-900 text-white p-4 shadow-md">
         <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <span class="font-bold tracking-wider text-sm">✈️ EXPLORE TOGETHER</span>
-            <span class="text-xs text-gray-400">Configurador de ruta</span>
+            <div class="font-bold tracking-wider text-sm">✈️ EXPLORE TOGETHER</div>
+            
+            <nav class="space-x-6 text-sm font-medium">
+                <a href="index.html" class="text-gray-300 hover:text-white transition">Inicio</a>
+                <a href="Organize.html" class="text-blue-400 border-b-2 border-blue-400 pb-1">Organizar Viaje</a>
+            </nav>
         </div>
     </header>
 
@@ -111,7 +118,7 @@
     </footer>
 
     <script>
-        // 1. Base de datos simulada de ciudades disponibles
+        // 1. Array de datos: Ciudades indexadas para la búsqueda inteligente
         const cities = [
             "Bilbao, España",
             "Barcelona, España",
@@ -124,49 +131,52 @@
             "Roma, Italia"
         ];
 
-        // 2. Función reutilizable para activar el autocompletado
+        // 2. Función reutilizable para activar el autocompletado en los inputs
         function enableAutocomplete(inputId, suggestionsId) {
-            const input = document.getElementById(inputId);
-            const box = document.getElementById(suggestionsId);
+            const input = document.getElementById(inputId); // Captura el cuadro de texto
+            const box = document.getElementById(suggestionsId); // Captura la caja de sugerencias
 
-            // Escucha cuando el usuario escribe en el input
+            // Escucha en tiempo real todo lo que el usuario escribe o borra
             input.addEventListener('input', function() {
                 const text = input.value.toLowerCase().trim();
-                box.innerHTML = ''; // Limpia sugerencias anteriores
+                box.innerHTML = ''; // Resetea las sugerencias previas del contenedor
 
-                // Si está vacío, oculta la cajita y frena la ejecución
+                // Si la casilla está en blanco, oculta la cajita flotante y detiene el proceso
                 if (!text) {
                     box.classList.add('hidden');
                     return;
                 }
 
-                // Filtra las ciudades que contengan lo escrito
+                // Filtra el array 'cities' guardando solo los nombres que incluyan las letras escritas
                 const matches = cities.filter(city => city.toLowerCase().includes(text));
 
-                // Si no hay coincidencias, oculta la cajita
+                // Si no hay ninguna coincidencia, mantiene la caja oculta
                 if (matches.length === 0) {
                     box.classList.add('hidden');
                     return;
                 }
 
-                // Muestra la cajita y crea un div por cada ciudad encontrada
+                // Si hay elementos válidos, elimina 'hidden' para hacer visible el recuadro
                 box.classList.remove('hidden');
+
+                // Crea dinámicamente un elemento HTML <div> por cada ciudad que coincida
                 matches.forEach(city => {
                     const option = document.createElement('div');
+                    // Estilos de la fila sugerida (padding, cambio de color al pasar el ratón, bordes internos)
                     option.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm text-gray-700 transition border-b border-gray-50 last:border-none';
                     option.textContent = city;
 
-                    // Si el usuario hace clic en la sugerencia
+                    // Si el usuario hace clic sobre la sugerencia generada
                     option.addEventListener('click', function() {
-                        input.value = city; // Rellena el input con el texto de la ciudad
-                        box.classList.add('hidden'); // Oculta la lista
+                        input.value = city; // Coloca el texto de la ciudad en el input
+                        box.classList.add('hidden'); // Oculta inmediatamente el menú
                     });
 
-                    box.appendChild(option);
+                    box.appendChild(option); // Añade el nuevo botón de opción al contenedor principal
                 });
             });
 
-            // Oculta la lista si el usuario hace clic en cualquier otro lado de la pantalla
+            // Evento global: Si se hace un clic fuera de la casilla o de sus sugerencias, estas se esconden automáticamente
             document.addEventListener('click', function(e) {
                 if (!input.contains(e.target) && !box.contains(e.target)) {
                     box.classList.add('hidden');
@@ -174,7 +184,7 @@
             });
         }
 
-        // 3. Activamos el truco para ambos cuadros de búsqueda
+        // 3. Inicialización del motor de búsqueda asignándolo a las dos casillas mediante sus identificadores únicos (IDs)
         enableAutocomplete('origin-input', 'origin-suggestions');
         enableAutocomplete('destination-input', 'destination-suggestions');
     </script>
