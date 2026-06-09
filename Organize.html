@@ -6,7 +6,10 @@
     <title>Planifica tu Ruta - Explore Together</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+
     <style>
         details > summary::-webkit-details-marker { display: none; }
         details > summary { list-style: none; }
@@ -85,6 +88,79 @@
                 </button>
             </div>
         </form>
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mt-4 flex flex-col md:flex-row items-center gap-6 relative z-0">
+            
+            <div class="flex space-x-6 border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:pr-6">
+                <label class="flex items-center space-x-2 cursor-pointer group">
+                    <input type="radio" name="trip-type" value="round-trip" checked class="w-4 h-4 text-blue-600 focus:ring-blue-500 cursor-pointer">
+                    <span class="text-sm font-semibold text-gray-700 group-hover:text-blue-600 transition">Ida y vuelta</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer group">
+                    <input type="radio" name="trip-type" value="one-way" class="w-4 h-4 text-blue-600 focus:ring-blue-500 cursor-pointer">
+                    <span class="text-sm font-semibold text-gray-700 group-hover:text-blue-600 transition">Solo ida</span>
+                </label>
+            </div>
+
+            <div class="flex-1 w-full relative">
+                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                    📅 Selecciona tus fechas
+                </label>
+                <input id="date-picker" type="text" class="w-full bg-transparent text-sm font-semibold text-gray-800 focus:outline-none placeholder-gray-300 cursor-pointer" placeholder="¿Cuándo viajas?">
+            </div>
+
+        </div>
+
+        ```
+
+---
+
+### Paso 3: Activar la inteligencia del calendario (JavaScript)
+
+Vete abajo del todo, dentro de tu etiqueta `<script>`. Pega este código al final (justo antes de que se cierre el `</script>`). Esto le dirá al calendario que muestre dos meses a la vez y que cambie su comportamiento si eliges "Solo ida" o "Ida y vuelta":
+
+```javascript
+        // ==========================================================
+        // 4. NUEVO: LÓGICA DEL CALENDARIO DE DOS MESES (FLATPICKR)
+        // ==========================================================
+        
+        // Función para crear el calendario. Recibe 'range' (ida y vuelta) o 'single' (solo ida)
+        function initCalendar(modeType) {
+            return flatpickr("#date-picker", {
+                mode: modeType,          // Rango de fechas o fecha única
+                showMonths: 2,           // ¡Muestra dos meses al mismo tiempo!
+                locale: "es",            // Traducido al español
+                minDate: "today",        // No deja seleccionar días del pasado
+                dateFormat: "d M Y",     // Formato bonito (ej: 15 Oct 2026)
+                altInput: true,
+                altFormat: "d M Y",
+                placeholder: modeType === 'range' ? "Día de ida - Día de vuelta" : "Día de ida"
+            });
+        }
+
+        // Arrancamos el calendario por defecto en modo "Ida y vuelta" (range)
+        let calendarInstance = initCalendar("range");
+
+        // Escuchamos si el usuario hace clic en los botones de "Solo ida" o "Ida y vuelta"
+        const tripRadios = document.querySelectorAll('input[name="trip-type"]');
+        
+        tripRadios.forEach(radio => {
+            radio.addEventListener('change', function(e) {
+                const selectedMode = e.target.value;
+                
+                // Destruimos el calendario viejo para que no haya errores
+                calendarInstance.destroy(); 
+                
+                // Limpiamos la casilla
+                document.getElementById('date-picker').value = ''; 
+                
+                // Creamos uno nuevo dependiendo del botón pulsado
+                if(selectedMode === 'one-way') {
+                    calendarInstance = initCalendar("single"); // Calendario de 1 sola selección
+                } else {
+                    calendarInstance = initCalendar("range");  // Calendario de 2 selecciones (rango)
+                }
+            });
+        });
 
         <section id="results-section" class="hidden mt-12 animate-fade-in">
             <h2 class="text-xl font-bold text-gray-900 mb-6 border-b pb-2">Opciones recomendadas</h2>
