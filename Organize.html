@@ -110,58 +110,6 @@
 
         </div>
 
-        ```
-
----
-
-### Paso 3: Activar la inteligencia del calendario (JavaScript)
-
-Vete abajo del todo, dentro de tu etiqueta `<script>`. Pega este código al final (justo antes de que se cierre el `</script>`). Esto le dirá al calendario que muestre dos meses a la vez y que cambie su comportamiento si eliges "Solo ida" o "Ida y vuelta":
-
-```javascript
-        // ==========================================================
-        // 4. NUEVO: LÓGICA DEL CALENDARIO DE DOS MESES (FLATPICKR)
-        // ==========================================================
-        
-        // Función para crear el calendario. Recibe 'range' (ida y vuelta) o 'single' (solo ida)
-        function initCalendar(modeType) {
-            return flatpickr("#date-picker", {
-                mode: modeType,          // Rango de fechas o fecha única
-                showMonths: 2,           // ¡Muestra dos meses al mismo tiempo!
-                locale: "es",            // Traducido al español
-                minDate: "today",        // No deja seleccionar días del pasado
-                dateFormat: "d M Y",     // Formato bonito (ej: 15 Oct 2026)
-                altInput: true,
-                altFormat: "d M Y",
-                placeholder: modeType === 'range' ? "Día de ida - Día de vuelta" : "Día de ida"
-            });
-        }
-
-        // Arrancamos el calendario por defecto en modo "Ida y vuelta" (range)
-        let calendarInstance = initCalendar("range");
-
-        // Escuchamos si el usuario hace clic en los botones de "Solo ida" o "Ida y vuelta"
-        const tripRadios = document.querySelectorAll('input[name="trip-type"]');
-        
-        tripRadios.forEach(radio => {
-            radio.addEventListener('change', function(e) {
-                const selectedMode = e.target.value;
-                
-                // Destruimos el calendario viejo para que no haya errores
-                calendarInstance.destroy(); 
-                
-                // Limpiamos la casilla
-                document.getElementById('date-picker').value = ''; 
-                
-                // Creamos uno nuevo dependiendo del botón pulsado
-                if(selectedMode === 'one-way') {
-                    calendarInstance = initCalendar("single"); // Calendario de 1 sola selección
-                } else {
-                    calendarInstance = initCalendar("range");  // Calendario de 2 selecciones (rango)
-                }
-            });
-        });
-
         <section id="results-section" class="hidden mt-12 animate-fade-in">
             <h2 class="text-xl font-bold text-gray-900 mb-6 border-b pb-2">Opciones recomendadas</h2>
             
