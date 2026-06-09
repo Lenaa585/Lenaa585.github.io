@@ -133,43 +133,19 @@
             </div>
 
         </div>
-        <section id="results-section" class="hidden mt-12 animate-fade-in">
-            <h2 class="text-xl font-bold text-gray-900 mb-6 border-b pb-2">Opciones recomendadas</h2>
+       <section id="results-section" class="hidden mt-12 animate-fade-in relative">
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
-                    <img src="https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?w=400&q=80" alt="Helsinki" class="w-full h-48 object-cover">
-                    <div class="p-4 flex justify-between items-start">
-                        <div>
-                            <h3 class="font-bold text-sm text-gray-900">Helsinki trip</h3>
-                            <p class="text-xs text-gray-400">Helsinki, Finlandia</p>
-                        </div>
-                        <span class="font-bold text-gray-900">355€</span>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
-                    <img src="https://images.unsplash.com/photo-1548685913-fe6574340a49?w=400&q=80" alt="Porvoo" class="w-full h-48 object-cover">
-                    <div class="p-4 flex justify-between items-start">
-                        <div>
-                            <h3 class="font-bold text-sm text-gray-900">Old town</h3>
-                            <p class="text-xs text-gray-400">Porvoo, Finlandia</p>
-                        </div>
-                        <span class="font-bold text-gray-900">310€</span>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
-                    <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&q=80" alt="Camping" class="w-full h-48 object-cover">
-                    <div class="p-4 flex justify-between items-start">
-                        <div>
-                            <h3 class="font-bold text-sm text-gray-900">Camping tour</h3>
-                            <p class="text-xs text-gray-400">Nuuksio National Park</p>
-                        </div>
-                        <span class="font-bold text-gray-900">685€</span>
-                    </div>
-                </div>
+            <div id="loading-spinner" class="flex flex-col items-center justify-center py-12 hidden">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mb-4"></div>
+                <h3 class="text-lg font-bold text-gray-800">Conectando con el servidor...</h3>
             </div>
+
+            <div id="results-content" class="hidden">
+                <h2 class="text-xl font-bold text-gray-900 mb-6 border-b pb-2">Opciones de ruta recomendadas</h2>
+                <div id="dynamic-routes-container" class="space-y-4">
+                    </div>
+            </div>
+
         </section>
 
     </main>
