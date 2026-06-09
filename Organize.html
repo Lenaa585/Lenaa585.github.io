@@ -6,6 +6,7 @@
     <title>Planifica tu Ruta - Explore Together</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
@@ -35,7 +36,7 @@
             <p class="text-sm text-gray-500">Introduce tus preferencias para empezar a buscar las mejores combinaciones.</p>
         </div>
 
-        <form class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 grid grid-cols-1 lg:grid-cols-5 gap-4 items-center relative z-10">
+        <form class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 grid grid-cols-1 lg:grid-cols-5 gap-4 items-center relative z-20">
             
             <div class="border-b lg:border-b-0 lg:border-r border-gray-100 pb-3 lg:pb-0 lg:pr-4 relative">
                 <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">📍 ¿Desde dónde sales?</label>
@@ -88,7 +89,8 @@
                 </button>
             </div>
         </form>
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mt-4 flex flex-col md:flex-row items-center gap-6 relative z-0">
+
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mt-4 flex flex-col md:flex-row items-center gap-6 relative z-10">
             
             <div class="flex space-x-6 border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:pr-6">
                 <label class="flex items-center space-x-2 cursor-pointer group">
@@ -156,9 +158,8 @@
     </footer>
 
     <script>
-        // 1. BASE DE DATOS DE CIUDADES
+        // --- 1. BASE DE DATOS DE CIUDADES ---
         const cities = [
-            //---EUROPA--
             { name: "Aalborg (Dinamarca)", continent: "Europa" },
             { name: "A Coruña (España)", continent: "Europa" },
             { name: "Aberdeen (Reino Unido)", continent: "Europa" },
@@ -295,9 +296,8 @@
             { name: "Zagreb (Croacia)", continent: "Europa" },
             { name: "Zaragoza (España)", continent: "Europa" },
             { name: "Zúrich (Suiza)", continent: "Europa" },
-            { name: "Tokio (Japón)", continent: "Asia" },
-            
-            // --- ÁFRICA ---
+           
+            // ---AFRICA---
             { name: "El Cairo (Egipto)", continent: "África" },
             { name: "Marrakech (Marruecos)", continent: "África" },
             { name: "Casablanca (Marruecos)", continent: "África" },
@@ -308,8 +308,7 @@
             { name: "Dakar (Senegal)", continent: "África" },
             { name: "Zanzíbar (Tanzania)", continent: "África" },
             { name: "Luanda (Angola)", continent: "África" },
-
-          // --- AMÉRICA ---
+            //--- AMERICA---
             { name: "Nueva York (EEUU)", continent: "América" },
             { name: "Miami (EEUU)", continent: "América" },
             { name: "Los Ángeles (EEUU)", continent: "América" },
@@ -322,7 +321,7 @@
             { name: "Toronto (Canadá)", continent: "América" },
             { name: "La Habana (Cuba)", continent: "América" },
             { name: "Cancún (México)", continent: "América" },
-            // --- ASIA ---
+              // ---ASIA---
             { name: "Tokio (Japón)", continent: "Asia" },
             { name: "Kioto (Japón)", continent: "Asia" },
             { name: "Bangkok (Tailandia)", continent: "Asia" },
@@ -337,7 +336,7 @@
             { name: "Malé (Maldivas)", continent: "Asia" }
         ];
 
-        // 2. FUNCIÓN DE AUTOCOMPLETADO
+        // --- 2. AUTOCOMPLETADO ---
         function enableAutocomplete(inputId, suggestionsId) {
             const input = document.getElementById(inputId);
             const box = document.getElementById(suggestionsId);
@@ -393,21 +392,47 @@
         enableAutocomplete('origin-input', 'origin-suggestions');
         enableAutocomplete('destination-input', 'destination-suggestions');
 
-        // ==========================================================
-        // 3. NUEVO: MOSTRAR RESULTADOS AL HACER CLIC EN "BUSCAR"
-        // ==========================================================
+        // --- 3. BOTÓN DE BUSCAR ---
         const searchBtn = document.getElementById('search-btn');
         const resultsSection = document.getElementById('results-section');
 
         searchBtn.addEventListener('click', function() {
-            // Le quitamos la clase 'hidden' para que la sección se haga visible
             resultsSection.classList.remove('hidden');
-            
-            // Hacemos que la página haga un scroll suave hacia abajo para ver los resultados
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
-    </script>
+        // --- 4. CALENDARIO FLATPICKR ---
+        function initCalendar(modeType) {
+            return flatpickr("#date-picker", {
+                mode: modeType,
+                showMonths: 2,           // Muestra dos meses
+                locale: "es",            // Idioma español
+                minDate: "today",        // No permite fechas pasadas
+                dateFormat: "d M Y",
+                altInput: true,
+                altFormat: "d M Y",
+                placeholder: modeType === 'range' ? "Día de ida - Día de vuelta" : "Día de ida"
+            });
+        }
 
+        // Inicia el calendario en modo "Ida y vuelta" por defecto
+        let calendarInstance = initCalendar("range");
+
+        // Cambia el calendario si el usuario selecciona "Solo ida"
+        const tripRadios = document.querySelectorAll('input[name="trip-type"]');
+        tripRadios.forEach(radio => {
+            radio.addEventListener('change', function(e) {
+                calendarInstance.destroy(); // Elimina el viejo
+                document.getElementById('date-picker').value = ''; // Limpia la casilla
+                
+                if(e.target.value === 'one-way') {
+                    calendarInstance = initCalendar("single");
+                } else {
+                    calendarInstance = initCalendar("range");
+                }
+            });
+        });
+
+    </script>
 </body>
 </html>
