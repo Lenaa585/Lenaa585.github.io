@@ -69,7 +69,37 @@
 
     <div class="md:pl-4">
         </div>
+<div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:px-4 relative">
+                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                    🚊 Transportes
+                </label>
+                
+                <details class="relative">
+                    <summary class="flex items-center justify-between text-sm font-semibold text-gray-700 cursor-pointer select-none py-0.5">
+                        <span>Configurar...</span>
+                        <span class="text-gray-400 text-xs">▼</span>
+                    </summary>
+                    
+                    <div class="absolute left-0 md:-left-4 mt-3 w-56 bg-white border border-gray-100 rounded-xl shadow-xl p-4 z-50 space-y-3">
+                        <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider border-b pb-1">¿Qué quieres usar?</p>
+                        
+                        <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700 hover:text-blue-600">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500" checked>
+                            <span>✈️ Avión</span>
+                        </label>
 
+                        <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700 hover:text-blue-600">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500" checked>
+                            <span>🚊 Tren</span>
+                        </label>
+
+                        <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700 hover:text-blue-600">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                            <span>🚌 Autobús</span>
+                        </label>
+                    </div>
+                </details>
+            </div>
 </form>
     </main>
 
@@ -81,6 +111,7 @@
         // 1. Array de datos estructurados: Ahora son "Objetos" que guardan nombre y continente
 // He añadido algunas de otros continentes para que veas cómo funciona el filtro
 const cities = [
+    { name: "Aalborg (Dinamarca)", continent: "Europa" },
     { name: "A Coruña (España)", continent: "Europa" },
     { name: "Aberdeen (Reino Unido)", continent: "Europa" },
     { name: "Alicante (España)", continent: "Europa" },
