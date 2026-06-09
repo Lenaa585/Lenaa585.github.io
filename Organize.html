@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-        /* ESTILOS PERSONALIZADOS: Ocultan la flecha por defecto de la etiqueta <details> */
         details > summary::-webkit-details-marker { display: none; }
         details > summary { list-style: none; }
     </style>
@@ -28,289 +27,325 @@
 
     <main class="max-w-5xl w-full mx-auto p-6 my-auto">
         
-        <div class="mb-6 text-center md:text-left">
+        <div class="mb-6 text-center lg:text-left">
             <h2 class="text-3xl font-bold text-gray-900 mb-1">Planifica tu próximo viaje</h2>
             <p class="text-sm text-gray-500">Introduce tus preferencias para empezar a buscar las mejores combinaciones.</p>
         </div>
 
-<form class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
-    
-    <div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:pr-4 relative">
-        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
-            📍 ¿Desde dónde sales?
-        </label>
-        <input id="origin-input" type="text" autocomplete="off" class="w-full bg-transparent text-sm font-semibold text-gray-800 focus:outline-none placeholder-gray-300" placeholder="Ciudad de origen">
-        <div id="origin-suggestions" class="absolute left-0 right-0 mt-3 bg-white border border-gray-100 rounded-xl shadow-xl z-50 max-h-48 overflow-y-auto hidden"></div>
-    </div>
+        <form class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 grid grid-cols-1 lg:grid-cols-5 gap-4 items-center relative z-10">
+            
+            <div class="border-b lg:border-b-0 lg:border-r border-gray-100 pb-3 lg:pb-0 lg:pr-4 relative">
+                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">📍 ¿Desde dónde sales?</label>
+                <input id="origin-input" type="text" autocomplete="off" class="w-full bg-transparent text-sm font-semibold text-gray-800 focus:outline-none placeholder-gray-300" placeholder="Ciudad de origen">
+                <div id="origin-suggestions" class="absolute left-0 right-0 mt-3 bg-white border border-gray-100 rounded-xl shadow-xl z-50 max-h-48 overflow-y-auto hidden"></div>
+            </div>
 
-    <div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:px-4 relative">
-        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
-            🌍 Continente
-        </label>
-        <select id="continent-select" class="w-full bg-transparent text-sm font-semibold text-gray-800 focus:outline-none cursor-pointer">
-            <option value="Todos">Todos</option>
-            <option value="Europa">Europa</option>
-            <option value="América">América</option>
-            <option value="Asia">Asia</option>
-            <option value="África">África</option>
-        </select>
-    </div>
+            <div class="border-b lg:border-b-0 lg:border-r border-gray-100 pb-3 lg:pb-0 lg:px-4 relative">
+                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">🌍 Continente</label>
+                <select id="continent-select" class="w-full bg-transparent text-sm font-semibold text-gray-800 focus:outline-none cursor-pointer">
+                    <option value="Todos">Todos</option>
+                    <option value="Europa">Europa</option>
+                    <option value="América">América</option>
+                    <option value="Asia">Asia</option>
+                    <option value="África">África</option>
+                </select>
+            </div>
 
-    <div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:px-4 relative">
-        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
-            🎯 ¿A dónde quieres ir?
-        </label>
-        <input id="destination-input" type="text" autocomplete="off" class="w-full bg-transparent text-sm font-semibold text-gray-800 focus:outline-none placeholder-gray-300" placeholder="Ciudad de destino">
-        <div id="destination-suggestions" class="absolute left-0 right-0 mt-3 bg-white border border-gray-100 rounded-xl shadow-xl z-50 max-h-48 overflow-y-auto hidden"></div>
-    </div>
+            <div class="border-b lg:border-b-0 lg:border-r border-gray-100 pb-3 lg:pb-0 lg:px-4 relative">
+                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">🎯 ¿A dónde quieres ir?</label>
+                <input id="destination-input" type="text" autocomplete="off" class="w-full bg-transparent text-sm font-semibold text-gray-800 focus:outline-none placeholder-gray-300" placeholder="Ciudad de destino">
+                <div id="destination-suggestions" class="absolute left-0 right-0 mt-3 bg-white border border-gray-100 rounded-xl shadow-xl z-50 max-h-48 overflow-y-auto hidden"></div>
+            </div>
 
-    <div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:px-4 relative">
-        </div>
-
-    <div class="md:pl-4">
-        </div>
-<div class="border-b md:border-b-0 md:border-r border-gray-100 pb-3 md:pb-0 md:px-4 relative">
-                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
-                    🚊 Transportes
-                </label>
-                
+            <div class="border-b lg:border-b-0 lg:border-r border-gray-100 pb-3 lg:pb-0 lg:px-4 relative">
+                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">🚊 Transportes</label>
                 <details class="relative">
                     <summary class="flex items-center justify-between text-sm font-semibold text-gray-700 cursor-pointer select-none py-0.5">
                         <span>Configurar...</span>
                         <span class="text-gray-400 text-xs">▼</span>
                     </summary>
-                    
-                    <div class="absolute left-0 md:-left-4 mt-3 w-56 bg-white border border-gray-100 rounded-xl shadow-xl p-4 z-50 space-y-3">
+                    <div class="absolute left-0 lg:-left-4 mt-3 w-56 bg-white border border-gray-100 rounded-xl shadow-xl p-4 z-50 space-y-3">
                         <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider border-b pb-1">¿Qué quieres usar?</p>
-                        
                         <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700 hover:text-blue-600">
-                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500" checked>
-                            <span>✈️ Avión</span>
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500" checked><span>✈️ Avión</span>
                         </label>
-
                         <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700 hover:text-blue-600">
-                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500" checked>
-                            <span>🚊 Tren</span>
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500" checked><span>🚊 Tren</span>
                         </label>
-
                         <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700 hover:text-blue-600">
-                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
-                            <span>🚌 Autobús</span>
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"><span>🚌 Autobús</span>
                         </label>
                     </div>
                 </details>
             </div>
-</form>
+
+            <div class="lg:pl-4">
+                <button id="search-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl text-sm transition shadow-md shadow-blue-100">
+                    Buscar opciones
+                </button>
+            </div>
+        </form>
+
+        <section id="results-section" class="hidden mt-12 animate-fade-in">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 border-b pb-2">Opciones recomendadas</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <img src="https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?w=400&q=80" alt="Helsinki" class="w-full h-48 object-cover">
+                    <div class="p-4 flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold text-sm text-gray-900">Helsinki trip</h3>
+                            <p class="text-xs text-gray-400">Helsinki, Finlandia</p>
+                        </div>
+                        <span class="font-bold text-gray-900">355€</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <img src="https://images.unsplash.com/photo-1548685913-fe6574340a49?w=400&q=80" alt="Porvoo" class="w-full h-48 object-cover">
+                    <div class="p-4 flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold text-sm text-gray-900">Old town</h3>
+                            <p class="text-xs text-gray-400">Porvoo, Finlandia</p>
+                        </div>
+                        <span class="font-bold text-gray-900">310€</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&q=80" alt="Camping" class="w-full h-48 object-cover">
+                    <div class="p-4 flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold text-sm text-gray-900">Camping tour</h3>
+                            <p class="text-xs text-gray-400">Nuuksio National Park</p>
+                        </div>
+                        <span class="font-bold text-gray-900">685€</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer class="text-center p-4 text-xs text-gray-400 bg-white border-t border-gray-100">
+    <footer class="text-center p-4 text-xs text-gray-400 bg-white border-t border-gray-100 mt-auto">
         &copy; 2026 Explore Together. Diseñado para GitHub Pages.
     </footer>
 
     <script>
-        // 1. Array de datos estructurados: Ahora son "Objetos" que guardan nombre y continente
-// He añadido algunas de otros continentes para que veas cómo funciona el filtro
-const cities = [
-    { name: "Aalborg (Dinamarca)", continent: "Europa" },
-    { name: "A Coruña (España)", continent: "Europa" },
-    { name: "Aberdeen (Reino Unido)", continent: "Europa" },
-    { name: "Alicante (España)", continent: "Europa" },
-    { name: "Almería (España)", continent: "Europa" },
-    { name: "Amberes (Bélgica)", continent: "Europa" },
-    { name: "Ámsterdam (Países Bajos)", continent: "Europa" },
-    { name: "Andorra la Vella (Andorra)", continent: "Europa" },
-    { name: "Atenas (Grecia)", continent: "Europa" },
-    { name: "Barcelona (España)", continent: "Europa" },
-    { name: "Basilea (Suiza)", continent: "Europa" },
-    { name: "Belfast (Reino Unido)", continent: "Europa" },
-    { name: "Belgrado (Serbia)", continent: "Europa" },
-    { name: "Bérgamo (Italia)", continent: "Europa" },
-    { name: "Berlín (Alemania)", continent: "Europa" },
-    { name: "Berna (Suiza)", continent: "Europa" },
-    { name: "Bilbao (España)", continent: "Europa" },
-    { name: "Birmingham (Reino Unido)", continent: "Europa" },
-    { name: "Bolonia (Italia)", continent: "Europa" },
-    { name: "Bratislava (Eslovaquia)", continent: "Europa" },
-    { name: "Bremen (Alemania)", continent: "Europa" },
-    { name: "Breslavia (Polonia)", continent: "Europa" },
-    { name: "Bristol (Reino Unido)", continent: "Europa" },
-    { name: "Brujas (Bélgica)", continent: "Europa" },
-    { name: "Bruselas (Bélgica)", continent: "Europa" },
-    { name: "Bucarest (Rumanía)", continent: "Europa" },
-    { name: "Budapest (Hungría)", continent: "Europa" },
-    { name: "Burdeos (Francia)", continent: "Europa" },
-    { name: "Cádiz (España)", continent: "Europa" },
-    { name: "Cambridge (Reino Unido)", continent: "Europa" },
-    { name: "Cardiff (Reino Unido)", continent: "Europa" },
-    { name: "Catania (Italia)", continent: "Europa" },
-    { name: "Chisinau (Moldavia)", continent: "Europa" },
-    { name: "Colonia (Alemania)", continent: "Europa" },
-    { name: "Copenhague (Dinamarca)", continent: "Europa" },
-    { name: "Córdoba (España)", continent: "Europa" },
-    { name: "Cracovia (Polonia)", continent: "Europa" },
-    { name: "Dortmund (Alemania)", continent: "Europa" },
-    { name: "Dresde (Alemania)", continent: "Europa" },
-    { name: "Dublín (Irlanda)", continent: "Europa" },
-    { name: "Dubrovnik (Croacia)", continent: "Europa" },
-    { name: "Düsseldorf (Alemania)", continent: "Europa" },
-    { name: "Edimburgo (Reino Unido)", continent: "Europa" },
-    { name: "Eindhoven (Países Bajos)", continent: "Europa" },
-    { name: "Estambul (Turquía)", continent: "Europa" },
-    { name: "Estocolmo (Suecia)", continent: "Europa" },
-    { name: "Estrasburgo (Francia)", continent: "Europa" },
-    { name: "Florencia (Italia)", continent: "Europa" },
-    { name: "Fráncfort (Alemania)", continent: "Europa" },
-    { name: "Gante (Bélgica)", continent: "Europa" },
-    { name: "Gdansk (Polonia)", continent: "Europa" },
-    { name: "Génova (Italia)", continent: "Europa" },
-    { name: "Ginebra (Suiza)", continent: "Europa" },
-    { name: "Gotemburgo (Suecia)", continent: "Europa" },
-    { name: "Granada (España)", continent: "Europa" },
-    { name: "Hamburgo (Alemania)", continent: "Europa" },
-    { name: "Hannover (Alemania)", continent: "Europa" },
-    { name: "Helsinki (Finlandia)", continent: "Europa" },
-    { name: "Ibiza (España)", continent: "Europa" },
-    { name: "Kiev (Ucrania)", continent: "Europa" },
-    { name: "La Valeta (Malta)", continent: "Europa" },
-    { name: "Leipzig (Alemania)", continent: "Europa" },
-    { name: "Lille (Francia)", continent: "Europa" },
-    { name: "Linz (Austria)", continent: "Europa" },
-    { name: "Lisboa (Portugal)", continent: "Europa" },
-    { name: "Liubliana (Eslovenia)", continent: "Europa" },
-    { name: "Liverpool (Reino Unido)", continent: "Europa" },
-    { name: "Lodz (Polonia)", continent: "Europa" },
-    { name: "Londres (Reino Unido)", continent: "Europa" },
-    { name: "Luxemburgo (Luxemburgo)", continent: "Europa" },
-    { name: "Lyon (Francia)", continent: "Europa" },
-    { name: "Madrid (España)", continent: "Europa" },
-    { name: "Málaga (España)", continent: "Europa" },
-    { name: "Malmö (Suecia)", continent: "Europa" },
-    { name: "Manchester (Reino Unido)", continent: "Europa" },
-    { name: "Marsella (Francia)", continent: "Europa" },
-    { name: "Milán (Italia)", continent: "Europa" },
-    { name: "Minsk (Bielorrusia)", continent: "Europa" },
-    { name: "Mónaco (Mónaco)", continent: "Europa" },
-    { name: "Montpellier (Francia)", continent: "Europa" },
-    { name: "Moscú (Rusia)", continent: "Europa" },
-    { name: "Múnich (Alemania)", continent: "Europa" },
-    { name: "Nantes (Francia)", continent: "Europa" },
-    { name: "Nápoles (Italia)", continent: "Europa" },
-    { name: "Niza (Francia)", continent: "Europa" },
-    { name: "Nicosia (Chipre)", continent: "Europa" },
-    { name: "Nottingham (Reino Unido)", continent: "Europa" },
-    { name: "Núremberg (Alemania)", continent: "Europa" },
-    { name: "Odesa (Ucrania)", continent: "Europa" },
-    { name: "Oporto (Portugal)", continent: "Europa" },
-    { name: "Oslo (Noruega)", continent: "Europa" },
-    { name: "Oxford (Reino Unido)", continent: "Europa" },
-    { name: "Palermo (Italia)", continent: "Europa" },
-    { name: "Palma de Mallorca (España)", continent: "Europa" },
-    { name: "París (Francia)", continent: "Europa" },
-    { name: "Parma (Italia)", continent: "Europa" },
-    { name: "Patras (Grecia)", continent: "Europa" },
-    { name: "Plovdiv (Bulgaria)", continent: "Europa" },
-    { name: "Podgorica (Montenegro)", continent: "Europa" },
-    { name: "Poznan (Polonia)", continent: "Europa" },
-    { name: "Praga (República Checa)", continent: "Europa" },
-    { name: "Reikiavik (Islandia)", continent: "Europa" },
-    { name: "Rennes (Francia)", continent: "Europa" },
-    { name: "Riga (Letonia)", continent: "Europa" },
-    { name: "Roma (Italia)", continent: "Europa" },
-    { name: "Róterdam (Países Bajos)", continent: "Europa" },
-    { name: "Salónica (Grecia)", continent: "Europa" },
-    { name: "Salzburgo (Austria)", continent: "Europa" },
-    { name: "San Marino (San Marino)", continent: "Europa" },
-    { name: "San Sebastián (España)", continent: "Europa" },
-    { name: "Santander (España)", continent: "Europa" },
-    { name: "Santiago de Compostela (España)", continent: "Europa" },
-    { name: "Sarajevo (Bosnia y Herzegovina)", continent: "Europa" },
-    { name: "Sevilla (España)", continent: "Europa" },
-    { name: "Sheffield (Reino Unido)", continent: "Europa" },
-    { name: "Skopie (Macedonia del Norte)", continent: "Europa" },
-    { name: "Sofía (Bulgaria)", continent: "Europa" },
-    { name: "Southampton (Reino Unido)", continent: "Europa" },
-    { name: "Stuttgart (Alemania)", continent: "Europa" },
-    { name: "Tallin (Estonia)", continent: "Europa" },
-    { name: "Timisoara (Rumanía)", continent: "Europa" },
-    { name: "Tirana (Albania)", continent: "Europa" },
-    { name: "Toledo (España)", continent: "Europa" },
-    { name: "Turín (Italia)", continent: "Europa" },
-    { name: "Turku (Finlandia)", continent: "Europa" },
-    { name: "Valencia (España)", continent: "Europa" },
-    { name: "Valladolid (España)", continent: "Europa" },
-    { name: "Varsovia (Polonia)", continent: "Europa" },
-    { name: "Venecia (Italia)", continent: "Europa" },
-    { name: "Verona (Italia)", continent: "Europa" },
-    { name: "Viena (Austria)", continent: "Europa" },
-    { name: "Vigo (España)", continent: "Europa" },
-    { name: "Vilna (Lituania)", continent: "Europa" },
-    { name: "Zagreb (Croacia)", continent: "Europa" },
-    { name: "Zaragoza (España)", continent: "Europa" },
-    { name: "Zúrich (Suiza)", continent: "Europa" }
-];
+        // 1. BASE DE DATOS DE CIUDADES
+        const cities = [
+            { name: "Aalborg (Dinamarca)", continent: "Europa" },
+            { name: "A Coruña (España)", continent: "Europa" },
+            { name: "Aberdeen (Reino Unido)", continent: "Europa" },
+            { name: "Alicante (España)", continent: "Europa" },
+            { name: "Almería (España)", continent: "Europa" },
+            { name: "Amberes (Bélgica)", continent: "Europa" },
+            { name: "Ámsterdam (Países Bajos)", continent: "Europa" },
+            { name: "Andorra la Vella (Andorra)", continent: "Europa" },
+            { name: "Atenas (Grecia)", continent: "Europa" },
+            { name: "Barcelona (España)", continent: "Europa" },
+            { name: "Basilea (Suiza)", continent: "Europa" },
+            { name: "Belfast (Reino Unido)", continent: "Europa" },
+            { name: "Belgrado (Serbia)", continent: "Europa" },
+            { name: "Bérgamo (Italia)", continent: "Europa" },
+            { name: "Berlín (Alemania)", continent: "Europa" },
+            { name: "Berna (Suiza)", continent: "Europa" },
+            { name: "Bilbao (España)", continent: "Europa" },
+            { name: "Birmingham (Reino Unido)", continent: "Europa" },
+            { name: "Bolonia (Italia)", continent: "Europa" },
+            { name: "Bratislava (Eslovaquia)", continent: "Europa" },
+            { name: "Bremen (Alemania)", continent: "Europa" },
+            { name: "Breslavia (Polonia)", continent: "Europa" },
+            { name: "Bristol (Reino Unido)", continent: "Europa" },
+            { name: "Brujas (Bélgica)", continent: "Europa" },
+            { name: "Bruselas (Bélgica)", continent: "Europa" },
+            { name: "Bucarest (Rumanía)", continent: "Europa" },
+            { name: "Budapest (Hungría)", continent: "Europa" },
+            { name: "Burdeos (Francia)", continent: "Europa" },
+            { name: "Cádiz (España)", continent: "Europa" },
+            { name: "Cambridge (Reino Unido)", continent: "Europa" },
+            { name: "Cardiff (Reino Unido)", continent: "Europa" },
+            { name: "Catania (Italia)", continent: "Europa" },
+            { name: "Chisinau (Moldavia)", continent: "Europa" },
+            { name: "Colonia (Alemania)", continent: "Europa" },
+            { name: "Copenhague (Dinamarca)", continent: "Europa" },
+            { name: "Córdoba (España)", continent: "Europa" },
+            { name: "Cracovia (Polonia)", continent: "Europa" },
+            { name: "Dortmund (Alemania)", continent: "Europa" },
+            { name: "Dresde (Alemania)", continent: "Europa" },
+            { name: "Dublín (Irlanda)", continent: "Europa" },
+            { name: "Dubrovnik (Croacia)", continent: "Europa" },
+            { name: "Düsseldorf (Alemania)", continent: "Europa" },
+            { name: "Edimburgo (Reino Unido)", continent: "Europa" },
+            { name: "Eindhoven (Países Bajos)", continent: "Europa" },
+            { name: "Estambul (Turquía)", continent: "Europa" },
+            { name: "Estocolmo (Suecia)", continent: "Europa" },
+            { name: "Estrasburgo (Francia)", continent: "Europa" },
+            { name: "Florencia (Italia)", continent: "Europa" },
+            { name: "Fráncfort (Alemania)", continent: "Europa" },
+            { name: "Gante (Bélgica)", continent: "Europa" },
+            { name: "Gdansk (Polonia)", continent: "Europa" },
+            { name: "Génova (Italia)", continent: "Europa" },
+            { name: "Ginebra (Suiza)", continent: "Europa" },
+            { name: "Gotemburgo (Suecia)", continent: "Europa" },
+            { name: "Granada (España)", continent: "Europa" },
+            { name: "Hamburgo (Alemania)", continent: "Europa" },
+            { name: "Hannover (Alemania)", continent: "Europa" },
+            { name: "Helsinki (Finlandia)", continent: "Europa" },
+            { name: "Ibiza (España)", continent: "Europa" },
+            { name: "Kiev (Ucrania)", continent: "Europa" },
+            { name: "La Valeta (Malta)", continent: "Europa" },
+            { name: "Leipzig (Alemania)", continent: "Europa" },
+            { name: "Lille (Francia)", continent: "Europa" },
+            { name: "Linz (Austria)", continent: "Europa" },
+            { name: "Lisboa (Portugal)", continent: "Europa" },
+            { name: "Liubliana (Eslovenia)", continent: "Europa" },
+            { name: "Liverpool (Reino Unido)", continent: "Europa" },
+            { name: "Lodz (Polonia)", continent: "Europa" },
+            { name: "Londres (Reino Unido)", continent: "Europa" },
+            { name: "Luxemburgo (Luxemburgo)", continent: "Europa" },
+            { name: "Lyon (Francia)", continent: "Europa" },
+            { name: "Madrid (España)", continent: "Europa" },
+            { name: "Málaga (España)", continent: "Europa" },
+            { name: "Malmö (Suecia)", continent: "Europa" },
+            { name: "Manchester (Reino Unido)", continent: "Europa" },
+            { name: "Marsella (Francia)", continent: "Europa" },
+            { name: "Milán (Italia)", continent: "Europa" },
+            { name: "Minsk (Bielorrusia)", continent: "Europa" },
+            { name: "Mónaco (Mónaco)", continent: "Europa" },
+            { name: "Montpellier (Francia)", continent: "Europa" },
+            { name: "Moscú (Rusia)", continent: "Europa" },
+            { name: "Múnich (Alemania)", continent: "Europa" },
+            { name: "Nantes (Francia)", continent: "Europa" },
+            { name: "Nápoles (Italia)", continent: "Europa" },
+            { name: "Niza (Francia)", continent: "Europa" },
+            { name: "Nicosia (Chipre)", continent: "Europa" },
+            { name: "Nottingham (Reino Unido)", continent: "Europa" },
+            { name: "Núremberg (Alemania)", continent: "Europa" },
+            { name: "Odesa (Ucrania)", continent: "Europa" },
+            { name: "Oporto (Portugal)", continent: "Europa" },
+            { name: "Oslo (Noruega)", continent: "Europa" },
+            { name: "Oxford (Reino Unido)", continent: "Europa" },
+            { name: "Palermo (Italia)", continent: "Europa" },
+            { name: "Palma de Mallorca (España)", continent: "Europa" },
+            { name: "París (Francia)", continent: "Europa" },
+            { name: "Parma (Italia)", continent: "Europa" },
+            { name: "Patras (Grecia)", continent: "Europa" },
+            { name: "Plovdiv (Bulgaria)", continent: "Europa" },
+            { name: "Podgorica (Montenegro)", continent: "Europa" },
+            { name: "Poznan (Polonia)", continent: "Europa" },
+            { name: "Praga (República Checa)", continent: "Europa" },
+            { name: "Reikiavik (Islandia)", continent: "Europa" },
+            { name: "Rennes (Francia)", continent: "Europa" },
+            { name: "Riga (Letonia)", continent: "Europa" },
+            { name: "Roma (Italia)", continent: "Europa" },
+            { name: "Róterdam (Países Bajos)", continent: "Europa" },
+            { name: "Salónica (Grecia)", continent: "Europa" },
+            { name: "Salzburgo (Austria)", continent: "Europa" },
+            { name: "San Marino (San Marino)", continent: "Europa" },
+            { name: "San Sebastián (España)", continent: "Europa" },
+            { name: "Santander (España)", continent: "Europa" },
+            { name: "Santiago de Compostela (España)", continent: "Europa" },
+            { name: "Sarajevo (Bosnia y Herzegovina)", continent: "Europa" },
+            { name: "Sevilla (España)", continent: "Europa" },
+            { name: "Sheffield (Reino Unido)", continent: "Europa" },
+            { name: "Skopie (Macedonia del Norte)", continent: "Europa" },
+            { name: "Sofía (Bulgaria)", continent: "Europa" },
+            { name: "Southampton (Reino Unido)", continent: "Europa" },
+            { name: "Stuttgart (Alemania)", continent: "Europa" },
+            { name: "Tallin (Estonia)", continent: "Europa" },
+            { name: "Timisoara (Rumanía)", continent: "Europa" },
+            { name: "Tirana (Albania)", continent: "Europa" },
+            { name: "Toledo (España)", continent: "Europa" },
+            { name: "Turín (Italia)", continent: "Europa" },
+            { name: "Turku (Finlandia)", continent: "Europa" },
+            { name: "Valencia (España)", continent: "Europa" },
+            { name: "Valladolid (España)", continent: "Europa" },
+            { name: "Varsovia (Polonia)", continent: "Europa" },
+            { name: "Venecia (Italia)", continent: "Europa" },
+            { name: "Verona (Italia)", continent: "Europa" },
+            { name: "Viena (Austria)", continent: "Europa" },
+            { name: "Vigo (España)", continent: "Europa" },
+            { name: "Vilna (Lituania)", continent: "Europa" },
+            { name: "Zagreb (Croacia)", continent: "Europa" },
+            { name: "Zaragoza (España)", continent: "Europa" },
+            { name: "Zúrich (Suiza)", continent: "Europa" },
+            { name: "Nueva York (EEUU)", continent: "América" },
+            { name: "Buenos Aires (Argentina)", continent: "América" },
+            { name: "Tokio (Japón)", continent: "Asia" },
+            { name: "El Cairo (Egipto)", continent: "África" }
+        ];
 
-// 2. Función de autocompletado mejorada
-function enableAutocomplete(inputId, suggestionsId) {
-    const input = document.getElementById(inputId);
-    const box = document.getElementById(suggestionsId);
-    // Capturamos el selector de continente
-    const continentSelect = document.getElementById('continent-select');
+        // 2. FUNCIÓN DE AUTOCOMPLETADO
+        function enableAutocomplete(inputId, suggestionsId) {
+            const input = document.getElementById(inputId);
+            const box = document.getElementById(suggestionsId);
+            const continentSelect = document.getElementById('continent-select');
 
-    input.addEventListener('input', function() {
-        const text = input.value.toLowerCase().trim();
-        const selectedContinent = continentSelect.value; // Leemos qué continente está seleccionado
-        box.innerHTML = '';
+            input.addEventListener('input', function() {
+                const text = input.value.toLowerCase().trim();
+                const selectedContinent = continentSelect.value;
+                box.innerHTML = '';
 
-        if (!text) {
-            box.classList.add('hidden');
-            return;
-        }
+                if (!text) {
+                    box.classList.add('hidden');
+                    return;
+                }
 
-        // Magia del filtro: Comprueba la letra escrita Y ADEMÁS comprueba el continente
-        const matches = cities.filter(cityObj => {
-            const matchesText = cityObj.name.toLowerCase().includes(text);
-            // Si está en "Todos", ignora el filtro de continente. Si no, debe coincidir.
-            const matchesContinent = (selectedContinent === "Todos") || (cityObj.continent === selectedContinent);
-            
-            return matchesText && matchesContinent;
-        });
+                const matches = cities.filter(cityObj => {
+                    const matchesText = cityObj.name.toLowerCase().includes(text);
+                    const matchesContinent = (selectedContinent === "Todos") || (cityObj.continent === selectedContinent);
+                    return matchesText && matchesContinent;
+                });
 
-        if (matches.length === 0) {
-            box.classList.add('hidden');
-            return;
-        }
+                if (matches.length === 0) {
+                    box.classList.add('hidden');
+                    return;
+                }
 
-        box.classList.remove('hidden');
+                box.classList.remove('hidden');
 
-        // Ahora iteramos sobre los objetos encontrados
-        matches.forEach(cityObj => {
-            const option = document.createElement('div');
-            // Añadimos una etiqueta visual para saber de qué continente es la sugerencia
-            option.innerHTML = `
-                <span class="font-semibold">${cityObj.name}</span> 
-                <span class="text-[10px] text-gray-400 ml-2 bg-gray-100 px-2 py-0.5 rounded">${cityObj.continent}</span>
-            `;
-            option.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm text-gray-700 transition border-b border-gray-50 last:border-none flex items-center justify-between';
+                matches.forEach(cityObj => {
+                    const option = document.createElement('div');
+                    option.innerHTML = `
+                        <span class="font-semibold">${cityObj.name}</span> 
+                        <span class="text-[10px] text-gray-400 ml-2 bg-gray-100 px-2 py-0.5 rounded">${cityObj.continent}</span>
+                    `;
+                    option.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm text-gray-700 transition border-b border-gray-50 last:border-none flex items-center justify-between';
 
-            option.addEventListener('click', function() {
-                input.value = cityObj.name; // Escribimos solo el nombre en la casilla
-                box.classList.add('hidden');
+                    option.addEventListener('click', function() {
+                        input.value = cityObj.name;
+                        box.classList.add('hidden');
+                    });
+
+                    box.appendChild(option);
+                });
             });
 
-            box.appendChild(option);
-        });
-    });
-
-    document.addEventListener('click', function(e) {
-        if (!input.contains(e.target) && !box.contains(e.target)) {
-            box.classList.add('hidden');
+            document.addEventListener('click', function(e) {
+                if (!input.contains(e.target) && !box.contains(e.target)) {
+                    box.classList.add('hidden');
+                }
+            });
         }
-    });
-}
 
-// 3. Inicializamos
-enableAutocomplete('origin-input', 'origin-suggestions');
-enableAutocomplete('destination-input', 'destination-suggestions');
+        enableAutocomplete('origin-input', 'origin-suggestions');
+        enableAutocomplete('destination-input', 'destination-suggestions');
+
+        // ==========================================================
+        // 3. NUEVO: MOSTRAR RESULTADOS AL HACER CLIC EN "BUSCAR"
+        // ==========================================================
+        const searchBtn = document.getElementById('search-btn');
+        const resultsSection = document.getElementById('results-section');
+
+        searchBtn.addEventListener('click', function() {
+            // Le quitamos la clase 'hidden' para que la sección se haga visible
+            resultsSection.classList.remove('hidden');
+            
+            // Hacemos que la página haga un scroll suave hacia abajo para ver los resultados
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
     </script>
 
 </body>
