@@ -115,9 +115,10 @@
                     ⏰ Horario Ida (Rango)
                 </label>
                 <div class="flex items-center space-x-1 text-sm text-gray-600 mt-1">
-                    <input type="time" class="bg-gray-50 border border-gray-200 rounded p-1.5 focus:outline-none focus:border-blue-400" value="06:00">
+                    <input type="time"  value="06:00">
+                    <input id="hora-inicio" class="bg-gray-50 border border-gray-200 rounded p-1.5 focus:outline-none focus:border-blue-400" type="time" value="06:00">
                     <span>a</span>
-                    <input type="time" class="bg-gray-50 border border-gray-200 rounded p-1.5 focus:outline-none focus:border-blue-400" value="22:00">
+                    <input id="hora-fin" class="bg-gray-50 border border-gray-200 rounded p-1.5 focus:outline-none focus:border-blue-400" type="time" value="22:00">
                 </div>
             </div>
 
@@ -126,9 +127,9 @@
                     ⏰ Horario Vuelta (Rango)
                 </label>
                 <div class="flex items-center space-x-1 text-sm text-gray-600 mt-1">
-                    <input type="time" class="bg-gray-50 border border-gray-200 rounded p-1.5 focus:outline-none focus:border-blue-400" value="06:00">
+                    <input id="hora-inicio" class="bg-gray-50 border border-gray-200 rounded p-1.5 focus:outline-none focus:border-blue-400" type="time" value="06:00">
                     <span>a</span>
-                    <input type="time" class="bg-gray-50 border border-gray-200 rounded p-1.5 focus:outline-none focus:border-blue-400" value="22:00">
+                    <input id="hora-fin" class="bg-gray-50 border border-gray-200 rounded p-1.5 focus:outline-none focus:border-blue-400" type="time" value="22:00">
                 </div>
             </div>
 
@@ -333,175 +334,158 @@
             { name: "Malé (Maldivas)", continent: "Asia" }
         ];
 
-        // --- 2. AUTOCOMPLETADO ---
-        function enableAutocomplete(inputId, suggestionsId) {
-            const input = document.getElementById(inputId);
-            const box = document.getElementById(suggestionsId);
-            const continentSelect = document.getElementById('continent-select');
 
-            input.addEventListener('input', function() {
-                const text = input.value.toLowerCase().trim();
-                const selectedContinent = continentSelect.value;
-                box.innerHTML = '';
+// ================= AUTOCOMPLETE =================
+function enableAutocomplete(inputId, suggestionsId) {
+    const input = document.getElementById(inputId);
+    const box = document.getElementById(suggestionsId);
+    const continentSelect = document.getElementById('continent-select');
 
-                if (!text) {
-                    box.classList.add('hidden');
-                    return;
-                }
+    input.addEventListener('input', function () {
+        const text = input.value.toLowerCase().trim();
+        const selectedContinent = continentSelect.value;
 
-                const matches = cities.filter(cityObj => {
-                    const matchesText = cityObj.name.toLowerCase().includes(text);
-                    const matchesContinent = (selectedContinent === "Todos") || (cityObj.continent === selectedContinent);
-                    return matchesText && matchesContinent;
-                });
+        box.innerHTML = '';
 
-                if (matches.length === 0) {
-                    box.classList.add('hidden');
-                    return;
-                }
-
-                box.classList.remove('hidden');
-
-                matches.forEach(cityObj => {
-                    const option = document.createElement('div');
-                    option.innerHTML = `
-                        <span class="font-semibold">${cityObj.name}</span> 
-                        <span class="text-[10px] text-gray-400 ml-2 bg-gray-100 px-2 py-0.5 rounded">${cityObj.continent}</span>
-                    `;
-                    option.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm text-gray-700 transition border-b border-gray-50 last:border-none flex items-center justify-between';
-
-                    option.addEventListener('click', function() {
-                        input.value = cityObj.name;
-                        box.classList.add('hidden');
-                    });
-
-                    box.appendChild(option);
-                });
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!input.contains(e.target) && !box.contains(e.target)) {
-                    box.classList.add('hidden');
-                }
-            });
+        if (!text) {
+            box.classList.add('hidden');
+            return;
         }
 
-        enableAutocomplete('origin-input', 'origin-suggestions');
-        enableAutocomplete('destination-input', 'destination-suggestions');
+        const matches = cities.filter(cityObj => {
+            const matchesText = cityObj.name.toLowerCase().includes(text);
+            const matchesContinent =
+                selectedContinent === "Todos" || cityObj.continent === selectedContinent;
 
-       // ==========================================================
-        // 3. BOTÓN DE BUSCAR (CONECTADO A TU BACKEND EN RENDER)
-        // ==========================================================
-        const searchBtn = document.getElementById('search-btn');
-        const resultsSection = document.getElementById('results-section');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const resultsContent = document.getElementById('results-content');
-        const dynamicRoutesContainer = document.getElementById('dynamic-routes-container');
+            return matchesText && matchesContinent;
+        });
 
-        searchBtn.addEventListener('click', function() {
-            // 1. Capturamos lo que el usuario ha escrito
-            const origin = document.getElementById('origin-input').value || "Origen Desconocido";
-            const destination = document.getElementById('destination-input').value || "Destino Desconocido";
+        if (matches.length === 0) {
+            box.classList.add('hidden');
+            return;
+        }
 
-            // 2. Preparamos la pantalla mostrando la rueda de carga
-            resultsSection.classList.remove('hidden');
-            resultsContent.classList.add('hidden'); 
-            loadingSpinner.classList.remove('hidden'); 
-            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        box.classList.remove('hidden');
 
-            // 3. ¡EL PUENTE! Llamamos a tu servidor real en Render
-           const urlBackend = `https://explore-together-backend.onrender.com/api/buscar?origen=${origin}&destino=${destination}`;
+        matches.forEach(cityObj => {
+            const option = document.createElement('div');
 
-            fetch(urlBackend)
-                .then(respuesta => respuesta.json()) // El camarero recibe el paquete JSON de la cocina
-              .then(datos => {
+            option.className =
+                'p-3 hover:bg-gray-50 cursor-pointer text-sm text-gray-700 flex justify-between';
 
-    loadingSpinner.classList.add('hidden');
-    resultsContent.classList.remove('hidden');
+            option.innerHTML = `
+                <span class="font-semibold">${cityObj.name}</span>
+                <span class="text-xs text-gray-400">${cityObj.continent}</span>
+            `;
 
-    dynamicRoutesContainer.innerHTML = '';
+            option.onclick = () => {
+                input.value = cityObj.name;
+                box.classList.add('hidden');
+            };
 
-    datos.forEach(vuelo => {
-
-        dynamicRoutesContainer.innerHTML += `
-            <div class="bg-white rounded-xl shadow-sm border border-blue-200 p-5 hover:shadow-md transition">
-
-                <div class="flex justify-between items-start mb-3">
-
-                    <div>
-                        <h3 class="font-bold text-lg text-gray-900">
-                            ${vuelo.origen} ➜ ${vuelo.destino}
-                        </h3>
-
-                        <p class="text-sm text-gray-600 mt-1">
-                            ✈️ ${vuelo.compania}
-                        </p>
-                    </div>
-
-                    <div class="text-right">
-                        <p class="text-xl font-bold text-blue-600">
-                            ${vuelo.precio}
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="text-sm text-gray-500 border-t pt-2">
-                    🕒 ${vuelo.salida} → ${vuelo.llegada}
-                </div>
-
-            </div>
-        `;
+            box.appendChild(option);
+        });
     });
 
-})
-
-                .catch(error => {
-                    // Por si el servidor está apagado o falla
-                    console.error("Error conectando con el servidor:", error);
-                    loadingSpinner.classList.add('hidden');
-                    resultsContent.classList.remove('hidden');
-                    dynamicRoutesContainer.innerHTML = `
-                        <div class="bg-red-50 p-4 rounded-xl border border-red-200">
-                            <p class="text-red-600 font-bold">Hubo un error conectando con el backend.</p>
-                            <p class="text-sm text-red-500">Asegúrate de que pusiste bien el enlace de Render en tu código.</p>
-                        </div>
-                    `;
-                });
-        });
-
-        // --- 4. CALENDARIO FLATPICKR ---
-        function initCalendar(modeType) {
-            return flatpickr("#date-picker", {
-                mode: modeType,
-                showMonths: 2,           // Muestra dos meses
-                locale: "es",            // Idioma español
-                minDate: "today",        // No permite fechas pasadas
-                dateFormat: "d M Y",
-                altInput: true,
-                altFormat: "d M Y",
-                placeholder: modeType === 'range' ? "Día de ida - Día de vuelta" : "Día de ida"
-            });
+    document.addEventListener('click', e => {
+        if (!input.contains(e.target) && !box.contains(e.target)) {
+            box.classList.add('hidden');
         }
+    });
+}
 
-        // Inicia el calendario en modo "Ida y vuelta" por defecto
-        let calendarInstance = initCalendar("range");
+enableAutocomplete('origin-input', 'origin-suggestions');
+enableAutocomplete('destination-input', 'destination-suggestions');
 
-        // Cambia el calendario si el usuario selecciona "Solo ida"
-        const tripRadios = document.querySelectorAll('input[name="trip-type"]');
-        tripRadios.forEach(radio => {
-            radio.addEventListener('change', function(e) {
-                calendarInstance.destroy(); // Elimina el viejo
-                document.getElementById('date-picker').value = ''; // Limpia la casilla
-                
-                if(e.target.value === 'one-way') {
-                    calendarInstance = initCalendar("single");
-                } else {
-                    calendarInstance = initCalendar("range");
-                }
-            });
+
+// ================= HORAS (IMPORTANTE) =================
+function parseHour(h) {
+    if (!h) return null;
+    return parseInt(h.replace(":", ""), 10);
+}
+
+
+// ================= BOTÓN BUSCAR =================
+const searchBtn = document.getElementById('search-btn');
+const resultsSection = document.getElementById('results-section');
+const loadingSpinner = document.getElementById('loading-spinner');
+const resultsContent = document.getElementById('results-content');
+const dynamicRoutesContainer = document.getElementById('dynamic-routes-container');
+
+searchBtn.addEventListener('click', async () => {
+
+    const origin = document.getElementById('origin-input').value || "Origen";
+    const destination = document.getElementById('destination-input').value || "Destino";
+
+    const horaInicio = parseHour(document.getElementById("hora-inicio").value);
+    const horaFin = parseHour(document.getElementById("hora-fin").value);
+
+    resultsSection.classList.remove('hidden');
+    resultsContent.classList.add('hidden');
+    loadingSpinner.classList.remove('hidden');
+
+    const urlBackend =
+        `https://explore-together-backend.onrender.com/api/buscar?origen=${origin}&destino=${destination}`;
+
+    try {
+        const res = await fetch(urlBackend);
+        let datos = await res.json();
+
+        // ================= FILTRO HORARIO =================
+        datos = datos.filter(vuelo => {
+            const salida = parseHour(vuelo.salida);
+            if (!horaInicio || !horaFin) return true; // si no hay filtro → todo
+            return salida >= horaInicio && salida <= horaFin;
         });
 
-    </script>
-</body>
-</html>
+        // ================= ORDEN POR HORA =================
+        datos.sort((a, b) => parseHour(a.salida) - parseHour(b.salida));
+
+        loadingSpinner.classList.add('hidden');
+        resultsContent.classList.remove('hidden');
+
+        dynamicRoutesContainer.innerHTML = '';
+
+        datos.forEach(vuelo => {
+            dynamicRoutesContainer.innerHTML += `
+                <div class="bg-white rounded-xl shadow-sm border p-5">
+
+                    <div class="flex justify-between">
+                        <div>
+                            <h3 class="font-bold text-lg">
+                                ${vuelo.origen} ➜ ${vuelo.destino}
+                            </h3>
+                            <p class="text-sm text-gray-500">
+                                ✈️ ${vuelo.compania}
+                            </p>
+                        </div>
+
+                        <div class="text-right">
+                            <p class="text-xl font-bold text-blue-600">
+                                ${vuelo.precio}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-sm text-gray-500 mt-2">
+                        🕒 ${vuelo.salida} → ${vuelo.llegada}
+                    </div>
+
+                </div>
+            `;
+        });
+
+    } catch (err) {
+        console.error(err);
+
+        loadingSpinner.classList.add('hidden');
+        resultsContent.classList.remove('hidden');
+
+        dynamicRoutesContainer.innerHTML = `
+            <div class="bg-red-100 text-red-700 p-4 rounded">
+                Error conectando con el backend
+            </div>
+        `;
+    }
+});
+</script>
